@@ -36,7 +36,7 @@ public class JdbcSandwichRepository implements  SandwichRepository {
 
     @Override
     public List<Sandwich> findSandwichesByCategory(String category) {
-        return (List<Sandwich>) jdbcTemplate.queryForObject("select * from  sandwiches where category=?",new SandwichMapper(),category);
+        return  jdbcTemplate.query("select * from  sandwiches where category=?",new SandwichMapper(),category);
     }
 
     @Override
