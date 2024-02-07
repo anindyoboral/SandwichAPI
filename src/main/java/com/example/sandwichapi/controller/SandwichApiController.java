@@ -51,7 +51,7 @@ public class SandwichApiController {
     }
 
     @DeleteMapping(path = "/sandwich/delete/{id}")
-    public void deletePerson(@PathVariable int id)  {
+    public void deleteSandwich(@PathVariable int id)  {
         sandwichService.deleteSandwich(id);
     }
 
