@@ -52,7 +52,7 @@ public class SandwichApiController {
             return new ResponseEntity<Object>(s, HttpStatus.OK);
         }catch (SandwichNotFoundException e){
             HttpStatus status = HttpStatus.NOT_FOUND;
-            ApiError err = new ApiError("person not found", status.value(), e.getMessage());
+            ApiError err = new ApiError("Sandwich not found", status.value(), e.getMessage());
             HttpHeaders responseHeaders = new HttpHeaders();
             responseHeaders.add("content-type", MediaType.APPLICATION_PROBLEM_JSON_VALUE);
             return new ResponseEntity<Object>(err, responseHeaders, status);
