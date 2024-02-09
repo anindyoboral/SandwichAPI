@@ -1,5 +1,6 @@
 package com.example.sandwichapi.repository;
 
+import com.example.sandwichapi.exception.SandwichNotFoundException;
 import com.example.sandwichapi.model.Sandwich;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,12 +26,12 @@ public class JdbcSandwichRepository implements  SandwichRepository {
     }
 
     @Override
-    public Sandwich findSandwichById(int id) {
+    public Sandwich findSandwichById(int id) throws SandwichNotFoundException {
         return jdbcTemplate.queryForObject("select * from  sandwiches where id=?",new JdbcSandwichRepository.SandwichMapper(),id);
     }
 
     @Override
-    public Sandwich findSandwichByName(String name) {
+    public Sandwich findSandwichByName(String name) throws SandwichNotFoundException{
         return jdbcTemplate.queryForObject("select * from  sandwiches where name=?",new JdbcSandwichRepository.SandwichMapper(),name);
     }
 

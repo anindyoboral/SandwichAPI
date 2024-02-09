@@ -1,11 +1,15 @@
 package com.example.sandwichapi.controller;
 
 
+import com.example.sandwichapi.exception.ApiError;
+import com.example.sandwichapi.exception.SandwichNotFoundException;
 import com.example.sandwichapi.model.Sandwich;
 import com.example.sandwichapi.service.SandwichService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,13 +29,34 @@ public class SandwichApiController {
     }
 
     @GetMapping("/sandwichid/{id}")
-    public Sandwich returnSandwichById(@PathVariable("id") int id){
-        return  sandwichService.findSandwichById(id);
+    public ResponseEntity<Object> returnSandwichById(@PathVariable("id") int id){
+
+        try {
+            Sandwich s = sandwichService.findSandwichById(id);
+            return new ResponseEntity<Object>(s, HttpStatus.OK);
+        }catch (SandwichNotFoundException e){
+            HttpStatus status = HttpStatus.NOT_FOUND;
+            ApiError err = new ApiError("person not found", status.value(), e.getMessage());
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("content-type", MediaType.APPLICATION_PROBLEM_JSON_VALUE);
+            return new ResponseEntity<Object>(err, responseHeaders, status);
+        }
+
     }
 
     @GetMapping("/sandwichname/{name}")
-    public Sandwich returnSandwichByName(@PathVariable("name") String name){
-        return  sandwichService.findSandwichByName(name);
+    public ResponseEntity<Object> returnSandwichByName(@PathVariable("name") String name){
+        //return  sandwichService.findSandwichByName(name);
+        try {
+            Sandwich s = sandwichService.findSandwichByName(name);
+            return new ResponseEntity<Object>(s, HttpStatus.OK);
+        }catch (SandwichNotFoundException e){
+            HttpStatus status = HttpStatus.NOT_FOUND;
+            ApiError err = new ApiError("person not found", status.value(), e.getMessage());
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.add("content-type", MediaType.APPLICATION_PROBLEM_JSON_VALUE);
+            return new ResponseEntity<Object>(err, responseHeaders, status);
+        }
     }
 
     @GetMapping("/sandwichcategory/{name}")
