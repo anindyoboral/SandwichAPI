@@ -1,5 +1,6 @@
 package com.example.sandwichapi.service;
 
+import com.example.sandwichapi.exception.SandwichNotFoundException;
 import com.example.sandwichapi.model.Sandwich;
 import com.example.sandwichapi.repository.SandwichRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,12 @@ public class AbisSandwichService implements  SandwichService{
     }
 
     @Override
-    public Sandwich findSandwichById(int id) {
+    public Sandwich findSandwichById(int id) throws SandwichNotFoundException {
         return sandwichRepository.findSandwichById(id);
     }
 
     @Override
-    public Sandwich findSandwichByName(String name) {
+    public Sandwich findSandwichByName(String name) throws SandwichNotFoundException {
         return sandwichRepository.findSandwichByName(name);
     }
 
